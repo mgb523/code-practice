@@ -61,6 +61,97 @@ public class stringDrills {
 
     }
 
+    @Test
+    public void palindromeIndex() {
+        String s = "aaa";
+        int result = -1;
+
+        // Store string in array
+        String[] list = s.split("");
+
+        // Check if already a palindrome
+        int y = list.length;
+        boolean isPalindrome = true;
+        for (int i = 0; i < list.length; i++) {
+            y--;
+            if (! list[i].equals(list[y])) {
+                isPalindrome = false;
+                break;
+            }
+        }
+        if (isPalindrome) {
+            result = 0;
+        } else {
+            // For each char in the array, check if the remaining string makes a palindrome
+            for (int i = 0; i < s.length(); i++) {
+                // Build the substring
+                ArrayList<String> substring = new ArrayList<>();
+                for (int j = 0; j < s.length(); j++) {
+                    if (j == i) {
+                        continue;
+                    }
+                    substring.add(list[j]);
+                }
+
+                isPalindrome = true;
+                y = substring.size();
+                for (int z = 0; z < substring.size(); z++) {
+                    y--;
+                    if (! substring.get(z).equals(substring.get(y))) {
+                        isPalindrome = false;
+                        break;
+                    }
+                }
+
+                if (isPalindrome) {
+                    result = i;
+                    break;
+                }
+            }
+        }
+
+        System.out.println("Result = " + result);
+    }
+
+    @Test
+    public void palindromeIndex2() {
+        String s = "aaabbbvaaa";
+        int result = -1;
+
+        // Check if already a palindrome
+        if (isPalindrome(s)) {
+            result = -1;
+        } else {
+            for (int i = 0; i < s.length(); i++) {
+                String substr = (i == 0) ?
+                        s.substring(1) :
+                        s.substring(0, i) + s.substring(i+1);
+
+                if (isPalindrome(substr)) {
+                    result = i;
+                    break;
+                }
+            }
+        }
+
+        System.out.println("Result = " + result);
+    }
+
+    private boolean isPalindrome(String a) {
+        boolean isPalindrome = true;
+        String[] list = a.split("");
+        int index = -1;
+        for (String c : list) {
+            index++;
+            if (! c.equals(list[a.length() -1 -index])) {
+                isPalindrome = false;
+                break;
+            }
+        };
+
+        return isPalindrome;
+    }
+
     // Find the longest repeating pattern
     @Test
     public void repeatingStringPattern() {
@@ -152,4 +243,30 @@ public class stringDrills {
             }
         }
     }
+
+//    @Test
+//    public void sortingMatrixRows() {
+//        List<String> grid = new ArrayList();
+//        grid.add("abcde");
+//        grid.add("gfijh");
+//        grid.add("klnmo");
+//        grid.add("tsrqp");
+//        grid.add("zxyvu");
+//
+//            // Alpha sort each row into a matrix
+//            List<String[]> sortedRows = new ArrayList();
+//            List<List<String>> matrix = new ArrayList<>();
+//            grid.stream().forEach( row -> {
+//                List<String> rowArray = String.split("");
+//                Arrays.sort(rowArray);
+//                sortedRows.add(rowArray);
+//                matrix.add(Arrays.asList(rowArray));
+//            });
+//
+//            // Analize each column
+//            System.out.println("r0c0 " + matrix.get(0).get(0));
+//            System.out.println("r1c0 " + matrix.get(1).get(0));
+//            System.out.println("r2c0 " + matrix.get(2).get(0) );
+//
+//        }
 }

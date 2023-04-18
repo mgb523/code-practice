@@ -91,24 +91,65 @@ public class numberDrills {
 
         // Sort by increasing number and figure out the mid point
         Arrays.sort(a);
-        int mid = n/2;
+        int mid = (n + 1)/2;
         int temp = a[mid];
         a[mid] = a[n - 1];
         a[n - 1] = temp;
 
         int st = mid + 1;
-        int ed = n - 2;
+        int ed = n - 1;
         while(st <= ed){
             temp = a[st];
             a[st] = a[ed];
             a[ed] = temp;
             st = st + 1;
-            ed = ed - 1;
+            ed = ed + 1;
         }
         for(int i = 0; i < n; i++){
             if(i > 0) System.out.print(" ");
             System.out.print(a[i]);
         }
         System.out.println();
+    }
+
+    @Test
+    public void caesarCipher() {
+        String s = "www.abc.xy";
+        int k = 87;
+
+
+        char [] charList = s.toCharArray();
+
+        String result = "";
+        char valC;
+        for (char c : charList) {
+            boolean isAlpha = false;
+            int val = (int) c;
+            int start = 64;
+            int wrap = 90;
+
+            if (val > 64 && val < 91) {
+                isAlpha = true;
+            } else if (val > 96 && val < 123) {
+                start = 96;
+                wrap = 122;
+                isAlpha = true;
+            }
+
+            if (isAlpha) {
+                k = k % 26;
+                int valf = val + k;
+                if (valf > wrap) {
+                    valf = start + valf - wrap;
+                }
+
+                val = valf;
+            }
+
+            valC = (char) val;
+            result += valC;
+        }
+
+        System.out.println("Result: " + result);
     }
 }
